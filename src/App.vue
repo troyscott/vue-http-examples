@@ -34,37 +34,55 @@ export default {
         username: '',
         email: ''
       },
-      users: []
+      users: [],
+      resource: {}
     };
 },
+  created() {
+    // run when the component is loaded
+    const customActions = {
+      saveAlt: {method: 'POST', url: 'alt.json'}
+    };
+    this.resource = this.$resource('data.json',{}, customActions);
+  },
   methods: {
     submit() {
-      console.log(this.user);
-      this.$http.post('data.json', this.user)
-        .then(response => {
-            console.log(response);
-        }, error => {
-            console.log(error);
-        })
+      // this.$http.post('data.json', this.user)
+      //   .then(response => {
+      //       console.log(response);
+      //   }, error => {
+      //       console.log(error);
+      //   })
+      
+      // this will send a POST to firebase
+      // first arg is optional set of parameters
+      // second is the user object
+      console.log('new user ...');
+      // this.resource.save({}, this.user);
+      this.resource.saveAlt(this.user);
+      
   },
   fetchData() {
-    this.$http.get('data.json')
-        .then(response => {
-          return response;
-        })
-        .then(data => {
-          console.log(data.body);
-          const resultArray = [];
-          for (let key in data.body){
-            console.log(data.body[key]);
-            //const item = data.body[key];
-            resultArray.push(data.body[key]);
-          }
-          this.users = resultArray;
-          console.log(this.users);
-          console.log(this.users[0].email);
 
-        })
+    // this.$http.get('data.json')
+    //     .then(response => {
+    //       return response;
+    //     })
+    //     .then(data => {
+    //       console.log(data.body);
+    //       const resultArray = [];
+    //       for (let key in data.body){
+    //         console.log(data.body[key]);
+    //         //const item = data.body[key];
+    //         resultArray.push(data.body[key]);
+    //       }
+    //       this.users = resultArray;
+    //       console.log(this.users);
+    //       console.log(this.users[0].email);
+
+    //     })
+
+  
   }
 }
 }
